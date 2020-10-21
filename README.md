@@ -4,6 +4,10 @@ Just a simple .puz parser
 
 ## Usage
 
+```sh
+npm install @dylanarmstrong/puz --save
+```
+
 ```js
 const parse = require('@dylanarmstrong/puz');
 // Or
