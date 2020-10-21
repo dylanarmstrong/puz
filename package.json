@@ -10,5 +10,22 @@
   "scripts": {
     "lint": "eslint lib/index.js",
     "test": "node ./test.js"
-  }
+  },
+  "author": "Dylan Armstrong <dylan@dylan.is>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dylanarmstrong/puz"
+  },
+  "bugs": {
+    "url": "https://github.com/dylanarmstrong/puz/issues"
+  },
+  "homepage": "https://github.com/dylanarmstrong/puz",
+  "keywords": [
+    "crossword",
+    "crosswords",
+    "puz",
+    "puz-parser",
+    "puz-file-format"
+  ],
+  "description": "Just a simple .puz parser"
 }
