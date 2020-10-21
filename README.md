@@ -2,11 +2,13 @@
 
 Just a simple .puz parser
 
-## Usage
+## Install
 
 ```sh
 npm install @dylanarmstrong/puz --save
 ```
+
+## Usage
 
 ```js
 const parse = require('@dylanarmstrong/puz');
