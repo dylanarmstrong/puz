@@ -23,7 +23,8 @@ const badPuz = Int8Array.from(
 
 const good = parse(goodPuz);
 assert(good.valid === true);
-assert(good.height[0] === good.width[0]);
+assert(good.header.height[0] === good.header.width[0]);
+assert(good.header.height[0] === 15);
 
 const bad = parse(badPuz);
 assert(bad.valid === false);
