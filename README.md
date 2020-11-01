@@ -16,7 +16,7 @@ const parse = require('@dylanarmstrong/puz');
 import parse from '@dylanarmstrong/puz';
 
 // Load a .puz file
-const data = new Int8Array(buffer);
+const data = new Uint8Array(buffer);
 
 // Parse the Int8Array data
 const puz = parse(data);
