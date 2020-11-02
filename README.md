@@ -1,6 +1,8 @@
 ## Puz Parser
 
-Just a simple .puz parser
+Just a simple .puz parser.
+
+Can be seen in action with [code](https://github.com/dylanarmstrong/crossword) / [demo](https://dylan.is/crossword).
 
 ## Install
 
@@ -18,24 +20,11 @@ import parse from '@dylanarmstrong/puz';
 // Load a .puz file
 const data = new Uint8Array(buffer);
 
-// Parse the Int8Array data
+// Parse the Uint8Array data
 const puz = parse(data);
 
 console.log(puz);
 /**
-  baseChecksum,
-  clues,
-  fileChecksum,
-  height,
-  magic,
-  mask1,
-  mask2,
-  maskedChecksums,
-  reserved,
-  unknown,
-  unused,
-  valid,
-  version,
-  width,
+  TODO
 **/
 ```
