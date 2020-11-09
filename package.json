@@ -1,11 +1,11 @@
 {
   "main": "./lib/index.js",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "name": "@dylanarmstrong/puz",
   "license": "MIT",
   "devDependencies": {
-    "@dylanarmstrong/eslint-config": "^0.2.1",
-    "eslint": "^7.5.0"
+    "@dylanarmstrong/eslint-config": "^0.2.3",
+    "eslint": "^7.13.0"
   },
   "scripts": {
     "lint": "eslint lib/index.js",
