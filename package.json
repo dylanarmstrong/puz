@@ -1,6 +1,6 @@
 {
   "main": "./lib/index.js",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "name": "@dylanarmstrong/puz",
   "license": "MIT",
   "devDependencies": {
@@ -19,6 +19,7 @@
   "bugs": {
     "url": "https://github.com/dylanarmstrong/puz/issues"
   },
+  "types": "./index.d.ts",
   "homepage": "https://github.com/dylanarmstrong/puz",
   "keywords": [
     "crossword",
