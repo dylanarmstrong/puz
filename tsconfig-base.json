@@ -2,7 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "esModuleInterop": true,
-    "lib": ["esnext"],
+    "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "noImplicitAny": true,
     "preserveConstEnums": true,

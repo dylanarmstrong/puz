@@ -118,52 +118,65 @@ const parse = (data: Uint8Array): Puz => {
 
     const isBlackSq = (n: number) => n === 46;
 
-    const getDown = (start: number) => {
-      const cells = [];
-      let i = 0;
-      for (const max = height - Math.floor(start / width); i < max; i++) {
-        const idx = start + i * width;
-        if (isBlackSq(grid[idx])) {
-          return {
-            cells,
-            len: i,
-          };
+    const getX = (n: number) => n % width;
+    const getY = (n: number) => Math.floor(n / width);
+    const getDown = (pos: number): CellDirection => {
+      const posX = getX(pos);
+      const getStartingCell = (n: number): number => {
+        const newX = getX(n);
+        if (posX !== newX || n < 0 || isBlackSq(grid[n])) {
+          return n + width;
         }
-        cells.push(idx);
+        return getStartingCell(n - width);
+      };
+      const getEndingCell = (n: number): number => {
+        const posY = getY(n);
+        const newX = getX(n);
+        if (posX !== newX || posY > height - 1 || isBlackSq(grid[n])) {
+          return n - width;
+        }
+        return getEndingCell(n + width);
+      };
+      const start = getStartingCell(pos);
+      const end = getEndingCell(pos);
+      const cells = [];
+      for (let i = 0; i < (end - start) / width + 1; i++) {
+        cells.push(start + (i * width));
       }
       return {
         cells,
-        len: i,
+        len: clues.length,
       };
     };
 
-    const getAcross = (start: number) => {
-      const cells = [];
-      let i = 0;
-      for (const max = width - (start % width); i < max; i++) {
-        const idx = start + i;
-        if (isBlackSq(grid[idx])) {
-          return {
-            cells,
-            len: i,
-          };
+    const getAcross = (pos: number): CellDirection => {
+      // On across, this cannot change
+      const posY = getY(pos);
+      const getStartingCell = (n: number): number => {
+        const newY = getY(n);
+        if (posY !== newY || n < 0 || isBlackSq(grid[n])) {
+          return n + 1;
         }
-        cells.push(idx);
+        return getStartingCell(n - 1);
+      };
+      const getEndingCell = (n: number): number => {
+        const posX = getX(n);
+        const newY = getY(n);
+        if (posY !== newY || posX > width || isBlackSq(grid[n])) {
+          return n - 1;
+        }
+        return getEndingCell(n + 1);
+      };
+      const start = getStartingCell(pos);
+      const end = getEndingCell(pos);
+      const cells = [];
+      for (let i = 0; i < end - start + 1; i++) {
+        cells.push(start + i);
       }
       return {
         cells,
-        len: i,
+        len: clues.length,
       };
-    };
-
-    let prevDown: CellDirection = {
-      cells: [],
-      len: 0,
-    };
-
-    let prevAcross: CellDirection = {
-      cells: [],
-      len: 0,
     };
 
     for (let i = 0, max = grid.length; i < max; i++) {
@@ -185,17 +198,13 @@ const parse = (data: Uint8Array): Puz => {
       if (isBlack) {
         isStart = false;
       } else if (isAcross && isDown) {
-        prevAcross = across;
-        prevDown = down;
         acrossClue = clues[clueIndex++];
         downClue = clues[clueIndex++];
         visibleClueIndex++;
       } else if (isAcross) {
-        prevAcross = across;
         acrossClue = clues[clueIndex++];
         visibleClueIndex++;
       } else if (isDown) {
-        prevDown = down;
         downClue = clues[clueIndex++];
         visibleClueIndex++;
       } else {
@@ -204,16 +213,16 @@ const parse = (data: Uint8Array): Puz => {
 
       computedGrid[y][x] = {
         across: {
-          cells: prevAcross.cells,
+          cells: across.cells,
           clue: acrossClue,
-          len: prevAcross.len,
+          len: across.len,
         },
         cell: i,
         clueIndex: visibleClueIndex,
         down: {
-          cells: prevDown.cells,
+          cells: down.cells,
           clue: downClue,
-          len: prevDown.len,
+          len: down.len,
         },
         isBlack,
         isStart,
