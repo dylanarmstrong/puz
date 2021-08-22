@@ -9,10 +9,16 @@
  * https://archive.is/N547D
  */
 
-const nMap = (n) => String.fromCharCode(n);
-const stringify = (n) => n.map(nMap).join('');
+import type {
+  CellDirection,
+  Header,
+  Puz, 
+} from './types';
 
-const verify = (data) => {
+const nMap = (n: number) => String.fromCharCode(n);
+const stringify = (n: number[]) => n.map(nMap).join('');
+
+const verify = (data: number[]) => {
   const magic = '41 43 52 4f 53 53 26 44 4f 57 4e 00'.split(' ');
   for (let i = 0, len = magic.length; i < len; i++) {
     if (data[i] !== Number.parseInt(magic[i], 16)) {
@@ -22,22 +28,26 @@ const verify = (data) => {
   return true;
 };
 
-// Pass in Int8Array
-const parse = (data) => {
+// Pass in UInt8Array
+const parse = (data: Uint8Array): Puz => {
   if (data.length < 52) {
-    return { header: { valid: false } };
+    return {
+      error: 'data.length < 52',
+      valid: false
+    };
   }
 
   try {
     const maxLength = data.length;
-    const get = (index, _length) => {
-      const useNullDelimiter = typeof _length === 'undefined';
-      const length = useNullDelimiter ? maxLength : _length;
+    const get = (index: number, _length?: number) => {
+      const length = typeof _length === 'undefined'
+        ? maxLength
+        : _length;
 
       const s = [];
       for (let i = index, max = index + length; i < max; i++) {
         const n = data[i];
-        if (useNullDelimiter && n === 0x00) {
+        if (typeof _length === 'undefined' && n === 0x00) {
           return { index: i, value: s };
         }
         s.push(n);
@@ -47,7 +57,7 @@ const parse = (data) => {
     };
 
     /* eslint-disable sort-keys */
-    const header = {
+    const header: Header = {
       checksum:           get(0x00, 0x2).value,
       magic:              get(0x02, 0xc).value,
       cibChecksum:        get(0x0e, 0x2).value,
@@ -66,11 +76,10 @@ const parse = (data) => {
     };
     /* eslint-enable sort-keys */
 
-    let { height, width } = header;
-    const { clues: nClues, magic } = header;
-    ([height] = height);
-    ([width] = width);
+    const height = header.height[0];
+    const width = header.width[0];
 
+    const { clues: nClues, magic } = header;
     // The following all require the width & height and the indices
     // start at end of the previous values
     const solution = get(0x34, width * height).value;
@@ -107,9 +116,9 @@ const parse = (data) => {
     let x = 0;
     let y = 0;
 
-    const isBlackSq = (n) => n === 46;
+    const isBlackSq = (n: number) => n === 46;
 
-    const getDown = (start) => {
+    const getDown = (start: number) => {
       const cells = [];
       let i = 0;
       for (const max = height - Math.floor(start / width); i < max; i++) {
@@ -128,7 +137,7 @@ const parse = (data) => {
       };
     };
 
-    const getAcross = (start) => {
+    const getAcross = (start: number) => {
       const cells = [];
       let i = 0;
       for (const max = width - (start % width); i < max; i++) {
@@ -147,8 +156,16 @@ const parse = (data) => {
       };
     };
 
-    let prevDown;
-    let prevAcross;
+    let prevDown: CellDirection = {
+      cells: [],
+      len: 0,
+    };
+
+    let prevAcross: CellDirection = {
+      cells: [],
+      len: 0,
+    };
+
     for (let i = 0, max = grid.length; i < max; i++) {
       x = i % width;
       y = Math.floor(i / width);
@@ -217,9 +234,9 @@ const parse = (data) => {
   } catch (e) {
     return {
       error: e.message,
-      header: { valid: false },
+      valid: false,
     };
   }
 };
 
-module.exports = parse;
+export default parse;

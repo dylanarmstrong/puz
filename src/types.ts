@@ -1,8 +1,11 @@
-export type CellDirection = {
+type RequiredCellDirection = {
   cells: number[],
-  clue: string,
   len: number,
 };
+
+export type CellDirection = RequiredCellDirection & Partial<{
+  clue: string,
+}>;
 
 export type Cell = {
   across: CellDirection,
@@ -35,16 +38,17 @@ export type Header = {
   width: number[],
 };
 
-export type Puz = {
+type RequiredPuz = {
+  valid: boolean,
+};
+
+export type Puz = RequiredPuz & Partial<{
   author: string,
   clues: string[],
   copyright: string,
+  error: string,
   grid: Grid,
   header: Header,
   solution: number[],
   title: string,
-  valid: boolean,
-};
-
-declare function parse(data: Uint8Array): Puz;
-export default parse;
+}>;
