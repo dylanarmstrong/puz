@@ -38,5 +38,10 @@
     "puz-parser",
     "puz-file-format"
   ],
-  "description": "Just a simple .puz parser"
+  "description": "Just a simple .puz parser",
+  "files": [
+    "src",
+    "dist/mjs",
+    "dist/cjs"
+  ]
 }
