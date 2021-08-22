@@ -12,7 +12,7 @@
 import type {
   CellDirection,
   Header,
-  Puz, 
+  Puz,
 } from './types';
 
 const nMap = (n: number) => String.fromCharCode(n);
@@ -33,7 +33,7 @@ const parse = (data: Uint8Array): Puz => {
   if (data.length < 52) {
     return {
       error: 'data.length < 52',
-      valid: false
+      valid: false,
     };
   }
 

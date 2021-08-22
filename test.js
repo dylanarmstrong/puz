@@ -2,7 +2,7 @@
 /* eslint-disable array-element-newline */
 
 const assert = require('assert');
-const parse = require('./lib').default;
+const parse = require('./dist/cjs').default;
 
 const goodPuz = Int8Array.from(
   [

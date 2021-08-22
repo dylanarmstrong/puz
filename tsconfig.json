@@ -1,17 +1,8 @@
 {
+  "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "declaration": true,
-    "declarationDir": "types",
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "outDir": "lib",
-    "preserveConstEnums": true,
-    "removeComments": true,
-    "sourceMap": true,
-    "strict": true,
-    "stripInternal": true,
-    "target": "es2015",
-    "typeRoots": ["node_modules/@types"]
-  },
-  "include": ["src/**/*", "types"],
+    "module": "esnext",
+    "outDir": "dist/mjs",
+    "target": "esnext"
+  }
 }
