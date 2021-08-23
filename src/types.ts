@@ -5,6 +5,7 @@ type RequiredCellDirection = {
 
 export type CellDirection = RequiredCellDirection & Partial<{
   clue: string,
+  clueIndex: number,
 }>;
 
 export type Cell = {
@@ -12,6 +13,8 @@ export type Cell = {
   cell: number,
   clueIndex: number,
   down: CellDirection,
+  isAcross: boolean,
+  isDown: boolean,
   isBlack: boolean,
   isStart: boolean,
   value: string,
