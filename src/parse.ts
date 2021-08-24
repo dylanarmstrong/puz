@@ -229,7 +229,7 @@ const parse = (data: Uint8Array): Puz => {
 
       if (isAcross) {
         acrossClue = {
-          clueIndex: acrossClueIndex,
+          clueIndex: visibleClueIndex,
           clue: clues[acrossClueIndex],
         };
       } else if (!isBlack) {
@@ -242,7 +242,7 @@ const parse = (data: Uint8Array): Puz => {
 
       if (isDown) {
         downClue = {
-          clueIndex: downClueIndex,
+          clueIndex: visibleClueIndex,
           clue: clues[downClueIndex],
         };
       } else if (!isBlack) {
