@@ -149,7 +149,7 @@ const parse = (data: Uint8Array): Puz => {
       }
       return {
         cells,
-        len: clues.length,
+        len: cells.length,
       };
     };
 
@@ -171,7 +171,7 @@ const parse = (data: Uint8Array): Puz => {
       }
       return {
         cells,
-        len: clues.length,
+        len: cells.length,
       };
     };
 
