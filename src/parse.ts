@@ -40,21 +40,19 @@ const parse = (data: Uint8Array): Puz => {
 
   try {
     const maxLength = data.length;
-    const get = (index: number, _length?: number) => {
-      const length = typeof _length === 'undefined'
-        ? maxLength
-        : _length;
-
+    const get = (index: number, length?: number) => {
       const s = [];
-      for (let i = index, max = index + length; i < max; i++) {
+      const useNullDelimiter = !!length;
+      const max = index + (length || maxLength);
+      for (let i = index; i < max; i++) {
         const n = data[i];
-        if (typeof _length === 'undefined' && n === 0x00) {
+        if (useNullDelimiter && n === 0x00) {
           return { index: i, value: s };
         }
         s.push(n);
       }
 
-      return { index: index + length, value: s };
+      return { index: max, value: s };
     };
 
     /* eslint-disable sort-keys */
@@ -229,27 +227,27 @@ const parse = (data: Uint8Array): Puz => {
 
       if (isAcross) {
         acrossClue = {
-          clueIndex: visibleClueIndex,
           clue: clues[acrossClueIndex],
+          clueIndex: visibleClueIndex,
         };
       } else if (!isBlack) {
         const dir = computedGrid[y][getX(startAcross)].across;
         acrossClue = {
-          clueIndex: dir.clueIndex,
           clue: dir.clue,
+          clueIndex: dir.clueIndex,
         };
       }
 
       if (isDown) {
         downClue = {
-          clueIndex: visibleClueIndex,
           clue: clues[downClueIndex],
+          clueIndex: visibleClueIndex,
         };
       } else if (!isBlack) {
         const dir = computedGrid[getY(startDown)][x].down;
         downClue = {
-          clueIndex: dir.clueIndex,
           clue: dir.clue,
+          clueIndex: dir.clueIndex,
         };
       }
 

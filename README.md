@@ -2,7 +2,7 @@
 
 Just a simple .puz parser.
 
-Can be seen in action with [code](https://github.com/dylanarmstrong/crossword) / [demo](https://dylan.is/crossword).
+Can be seen in action with [code](https://github.com/dylanarmstrong/crossword-svelte) / [demo](https://dylan.is/crossword).
 
 ## Install
 
