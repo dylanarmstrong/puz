@@ -42,7 +42,7 @@ const parse = (data: Uint8Array): Puz => {
     const maxLength = data.length;
     const get = (index: number, length?: number) => {
       const s = [];
-      const useNullDelimiter = !!length;
+      const useNullDelimiter = typeof length === 'undefined';
       const max = index + (length || maxLength);
       for (let i = index; i < max; i++) {
         const n = data[i];
